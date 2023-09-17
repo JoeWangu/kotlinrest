@@ -9,6 +9,6 @@ class NetworkProductRepositoryTest {
     @Test
     fun networkProductRepository_getProducts_verifyProductList() = runTest{
         val repository = OnlineAppRepository(productsApiService = FakeProductsApiService())
-        assertEquals(repository.getProducts(), FakeDataSource.products)
+        assertEquals(repository.getProducts(""), FakeDataSource.products)
     }
 }

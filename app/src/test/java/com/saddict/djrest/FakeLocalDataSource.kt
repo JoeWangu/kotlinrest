@@ -1,9 +1,6 @@
 package com.saddict.djrest
 
-import com.saddict.djrest.FakeDataSource.imageDetailOne
-import com.saddict.djrest.FakeDataSource.imageDetailTwo
 import com.saddict.djrest.model.local.ProductEntity
-import com.saddict.djrest.model.remote.ImageArrayResults
 
 object FakeLocalDataSource {
     private const val idOne = 1
@@ -12,6 +9,7 @@ object FakeLocalDataSource {
     private const val specificationsOne = "title1"
     private const val priceOne = 20000.0
     private const val imageOne = 1
+    private const val imageUrlOne = "imageUrlOne"
     private const val categoryOne = 1
     private const val supplierOne = 1
 
@@ -21,6 +19,7 @@ object FakeLocalDataSource {
     private const val specificationsTwo = "title2"
     private const val priceTwo = 10000.0
     private const val imageTwo = 2
+    private const val imageUrlTwo = "imageUrlTwo"
     private const val categoryTwo = 2
     private const val supplierTwo = 2
 
@@ -32,7 +31,7 @@ object FakeLocalDataSource {
             specifications = specificationsOne,
             price = priceOne,
             image = imageOne,
-            imageDetail = imageDetailOne,
+            imageDetail = imageUrlOne,
             category = categoryOne,
             supplier = supplierOne
         ),
@@ -43,7 +42,7 @@ object FakeLocalDataSource {
             specifications = specificationsTwo,
             price = priceTwo,
             image = imageTwo,
-            imageDetail = imageDetailTwo,
+            imageDetail = imageUrlTwo,
             category = categoryTwo,
             supplier = supplierTwo
         )
