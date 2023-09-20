@@ -61,7 +61,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.saddict.djrest.R
-import com.saddict.djrest.data.PreferenceDataStore
+import com.saddict.djrest.data.manager.PreferenceDataStore
 import com.saddict.djrest.model.local.ProductEntity
 import com.saddict.djrest.ui.TopBar
 import com.saddict.djrest.ui.navigation.NavigationDestination
@@ -80,7 +80,7 @@ object HomeDestination : NavigationDestination {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    onNavigateUp: () -> Unit,
+//    onNavigateUp: () -> Unit,
     navigateToItemEntry: () -> Unit,
     navigateToItemDetails: (Int) -> Unit,
     modifier: Modifier = Modifier,
@@ -96,8 +96,8 @@ fun HomeScreen(
         topBar = {
             TopBar(
                 title = stringResource(HomeDestination.titleRes),
-                canNavigateBack = true,
-                navigateUp = onNavigateUp,
+                canNavigateBack = false,
+//                navigateUp = onNavigateUp,
                 scrollBehavior = scrollBehavior
             )
         },
@@ -158,7 +158,7 @@ fun HomeBody(
 //            refreshAction = refreshAction,
             onLogOutClick = onLogOutClick,
             onSendClick = onSendClick,
-            modifier = modifier.fillMaxWidth()
+            modifier = modifier.fillMaxSize()
         )
 
 //        is ProductsUiState.Error -> ErrorScreen(retryAction, modifier = modifier.fillMaxSize())
@@ -408,7 +408,7 @@ fun LoadingScreen(modifier: Modifier = Modifier) {
         ), label = "loader"
     )
     Column(
-        modifier = modifier,
+        modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

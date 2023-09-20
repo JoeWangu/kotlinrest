@@ -1,4 +1,4 @@
-package com.saddict.djrest.data
+package com.saddict.djrest.data.manager
 
 import androidx.room.Dao
 import androidx.room.Insert

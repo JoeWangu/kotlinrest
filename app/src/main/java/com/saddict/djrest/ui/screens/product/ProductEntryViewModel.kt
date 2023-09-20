@@ -2,30 +2,22 @@ package com.saddict.djrest.ui.screens.product
 
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.saddict.djrest.data.AppRepository
-import com.saddict.djrest.data.sources.AppDaoRepository
 import com.saddict.djrest.data.sources.remote.AppApi
 import com.saddict.djrest.model.remote.ImageArrayResults
 import com.saddict.djrest.model.remote.PostProducts
 import com.saddict.djrest.model.remote.ProductsResult
-import okio.IOException
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class ProductEntryViewModel(
 //    private val repository: AppDaoRepository,
-//    context: Context
+    context: Context
 ) : ViewModel() {
 //    private val apiRepo = AppRepository(context)
 //    private val apiRepo = AppNetworkRepository()
-    private val apiRepo = AppApi().productsRepository
+    private val apiRepo = AppApi(context).productsRepository
     var productEntryUiState by mutableStateOf(ProductEntryUiState())
         private set
 
@@ -69,12 +61,12 @@ data class EntryDetails(
     val price: String = ""
 )
 
-fun ProductsResult.toEntryDetails(): EntryDetails = EntryDetails(
-    productName = productName ?: "",
-    modelNumber = modelNumber ?: "",
-    specifications = specifications ?: "",
-    price = price.toString()
-)
+//fun ProductsResult.toEntryDetails(): EntryDetails = EntryDetails(
+//    productName = productName ?: "",
+//    modelNumber = modelNumber ?: "",
+//    specifications = specifications ?: "",
+//    price = price.toString()
+//)
 
 fun EntryDetails.toPostProducts(): PostProducts = PostProducts(
     productName = productName,

@@ -29,7 +29,7 @@ data class ProductDetailsUiState(
 
 class ProductDetailsViewModel(
     savedStateHandle: SavedStateHandle,
-    private val repository: AppDaoRepository
+    repository: AppDaoRepository
 ): ViewModel() {
     private val productId: Int = checkNotNull(savedStateHandle[ProductDetailsDestination.productIdArg])
     val uiState: StateFlow<ProductDetailsUiState> =

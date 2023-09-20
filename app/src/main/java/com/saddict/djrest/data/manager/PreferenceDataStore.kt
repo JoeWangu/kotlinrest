@@ -1,4 +1,4 @@
-package com.saddict.djrest.data
+package com.saddict.djrest.data.manager
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -9,18 +9,21 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
 import java.io.IOException
 
 //data class Token(val token: String)
 
 //private const val USER_PREFERENCES_NAME = "user_preferences"
 //private const val LAYOUT_PREFERENCES_NAME = "layout_preferences"
-private const val TOKEN = "user_token"
+//private
+const val TOKEN = "user_token"
 
 // Create a DataStore instance using the preferencesDataStore delegate, with the Context as
 // receiver.
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
+val Context.tokenDataStore: DataStore<Preferences> by preferencesDataStore(
     name = TOKEN
 )
 
@@ -31,7 +34,8 @@ class PreferenceDataStore(
 //    dataStore: DataStore<Preferences>,
     context: Context
 ) {
-    private val pref = context.dataStore
+    private val pref = context.tokenDataStore
+//    private val pref = dataStore
 
     private object PreferencesKeys {
         val TOKEN_KEY = stringPreferencesKey("token_key")
@@ -50,8 +54,16 @@ class PreferenceDataStore(
             preferences[PreferencesKeys.TOKEN_KEY] ?: ""
         }
 
-//    fun getToken() = pref.data.map {
-//        Token(token = it[PreferencesKeys.TOKEN_KEY] ?: "")
+    fun getToken(): String {
+        var token: String
+        runBlocking {
+            token = preferenceFlow.first()
+        }
+        return token
+    }
+
+//    suspend fun getToken(): String?{
+//        return pref.data.collect().toString()
 //    }
 
     suspend fun setToken(token: String?){
@@ -59,27 +71,13 @@ class PreferenceDataStore(
             preferences[PreferencesKeys.TOKEN_KEY] = token ?: ""
         }
     }
-}
 
-//class SettingsDataStore(context: Context) {
-//    private val IS_LINEAR_LAYOUT_MANAGER = booleanPreferencesKey("is_linear_layout_manager")
-//    suspend fun saveLayoutToPreferencesStore(isLinearLayoutManager: Boolean, context: Context) {
-//        context.dataStore.edit { preferences ->
-//            preferences[IS_LINEAR_LAYOUT_MANAGER] = isLinearLayoutManager
-//        }
-//    }
-//    val preferenceFlow: Flow<Boolean> = context.dataStore.data
-//        .catch {
-//            if (it is IOException) {
-//                it.printStackTrace()
-//                emit(emptyPreferences())
-//            } else {
-//                throw it
-//            }
-//        }
-//        .map { preferences ->
-//            // On the first run of the app, we will use LinearLayoutManager by default
-//            preferences[IS_LINEAR_LAYOUT_MANAGER] ?: true
-//        }
-//
-//}
+/*    companion object {
+        @Volatile private var INSTANCE: PreferenceDataStore? = null
+
+        fun getInstance(context: Context): PreferenceDataStore =
+            INSTANCE ?: synchronized(this) {
+                INSTANCE ?: PreferenceDataStore(context.dataStore).also { INSTANCE = it }
+            }
+    }*/
+}

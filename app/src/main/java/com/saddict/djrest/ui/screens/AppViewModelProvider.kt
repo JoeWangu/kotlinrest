@@ -1,14 +1,12 @@
 package com.saddict.djrest.ui.screens
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
 import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.saddict.djrest.ProductsApplication
-import com.saddict.djrest.data.PreferenceDataStore
 import com.saddict.djrest.ui.screens.home.ProductsViewModel
 import com.saddict.djrest.ui.screens.login.LoginViewModel
 import com.saddict.djrest.ui.screens.product.ProductDetailsViewModel
@@ -35,19 +33,20 @@ object AppViewModelProvider {
         }
         initializer {
             ProductEntryViewModel(
-//                context = productApplication().applicationContext
+                context = productApplication().applicationContext
             )
         }
         initializer {
             ProductEditViewModel(
                 this.createSavedStateHandle(),
-//                context = productApplication().applicationContext,
+                context = productApplication().applicationContext,
                 productApplication().container.productsDaoRepository
             )
         }
         initializer {
             LoginViewModel(
-                preferenceDataStore = PreferenceDataStore(productApplication().applicationContext)
+                context = productApplication().applicationContext
+//                preferenceDataStore = PreferenceDataStore(productApplication().applicationContext)
             )
         }
     }

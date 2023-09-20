@@ -25,8 +25,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,6 +46,7 @@ import com.saddict.djrest.ui.navigation.NavigationDestination
 import com.saddict.djrest.ui.screens.AppViewModelProvider
 import com.saddict.djrest.ui.screens.home.HomeDestination
 import com.saddict.djrest.utils.toastUtil
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 object LoginDestination : NavigationDestination {
@@ -110,8 +111,8 @@ fun LoginInput(
     modifier: Modifier = Modifier,
     viewModel: LoginViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    var username by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    var username by rememberSaveable { mutableStateOf("") }
+    var password by rememberSaveable { mutableStateOf("") }
     val coroutineScope = rememberCoroutineScope()
     val ctx = LocalContext.current
 //    val preferenceDataStore = PreferenceDataStore(ctx)
@@ -153,14 +154,15 @@ fun LoginInput(
                     coroutineScope.launch {
                         viewModel.login(username, password)
                         viewModel.uiState.collect { state ->
-                            when(state){
+                            when (state) {
                                 LoginUiState.Error -> ctx.toastUtil("Incorrect username or password")
                                 LoginUiState.Loading -> ctx.toastUtil("Waiting for response")
                                 is LoginUiState.Success -> {
 //                                    preferenceDataStore.preferenceFlow.collect{
 //                                        ctx.toastUtil(it)
-                                        ctx.toastUtil("Login Success")
-                                        navigateToHome()
+                                    ctx.toastUtil("Login Success")
+                                    delay(5_000L)
+                                    navigateToHome()
 //                                    }
                                 }
                             }

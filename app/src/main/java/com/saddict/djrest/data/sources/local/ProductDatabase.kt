@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.saddict.djrest.data.ProductDao
+import com.saddict.djrest.data.manager.ProductDao
 import com.saddict.djrest.model.local.ProductEntity
 import com.saddict.djrest.utils.Converters
 

@@ -11,10 +11,10 @@ import retrofit2.Call
 import retrofit2.Response
 
 interface ApiRepository {
-    suspend fun getProducts(tokenPass: String): Products
-    suspend fun postProducts(products: PostProducts): Response<ProductsResult>
-    suspend fun getSingleProduct(id: Int, tokenPass: String): Call<ProductsResult>
-    suspend fun updateProduct(id: Int, product: ProductsResult): Call<ProductsResult>
+    suspend fun getProducts(): Products
+    suspend fun postProducts(products: PostProducts): Response<Products>
+    suspend fun getSingleProduct(id: Int): Call<ProductsResult>
+    suspend fun updateProduct(id: Int, product: ProductsResult): Call<Products>
     suspend fun login(user: User): Response<UserResponse>
 }
 /**

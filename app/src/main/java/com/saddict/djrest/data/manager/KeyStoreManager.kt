@@ -1,6 +1,6 @@
-package com.saddict.djrest.cryptomanager
+package com.saddict.djrest.data.manager
 
-import android.security.keystore.KeyGenParameterSpec
+/*import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import java.io.InputStream
 import java.io.OutputStream
@@ -10,7 +10,8 @@ import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.crypto.spec.IvParameterSpec
 
-class CryptoManager {
+
+class KeyStoreManager {
     private val keyStore = KeyStore.getInstance("AndroidKeystore").apply {
         load(null)
     }
@@ -44,6 +45,13 @@ class CryptoManager {
             )
         }.generateKey()
     }
+
+//    @RequiresApi(Build.VERSION_CODES.O)
+//    fun encryptAndSave(bytes: ByteArray){
+//        val encryptedToken = encryptCipher.doFinal(bytes)
+//        val passwordProtection = KeyStore.PasswordProtection(null)
+//        keyStore.setEntry(keyAlias, KeyStore.SecretKeyEntry(getKey()), passwordProtection)
+//    }
 
 //    fun encrypt(bytes: ByteArray): Pair<ByteArray, ByteArray> {
 //        val encryptedBytes = encryptCipher.doFinal(bytes)
@@ -88,5 +96,6 @@ class CryptoManager {
         private const val BLOCK_MODE = KeyProperties.BLOCK_MODE_CBC
         private const val PADDING = KeyProperties.ENCRYPTION_PADDING_PKCS7
         private const val TRANSFORMATION = "$ALGORITHM/$BLOCK_MODE/$PADDING"
+//        private const val keyAlias = "MY_AUTH_TOKEN_KEY"
     }
-}
+}*/

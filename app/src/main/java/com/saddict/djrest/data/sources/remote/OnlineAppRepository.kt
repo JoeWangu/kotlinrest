@@ -12,13 +12,13 @@ import retrofit2.Response
 
 class OnlineAppRepository(private val productsApiService: ProductsApiService) :
     ApiRepository {
-    override suspend fun getProducts(tokenPass: String): Products =
-        productsApiService.getProducts("json", "Token $tokenPass")
-    override suspend fun postProducts(products: PostProducts): Response<ProductsResult> =
+    override suspend fun getProducts(): Products =
+        productsApiService.getProducts("json")
+    override suspend fun postProducts(products: PostProducts): Response<Products> =
         productsApiService.postProducts(products)
-    override suspend fun getSingleProduct(id: Int, tokenPass: String): Call<ProductsResult> =
-        productsApiService.getSingleProduct(id = id, "Token $tokenPass")
-    override suspend fun updateProduct(id: Int, product: ProductsResult) =
+    override suspend fun getSingleProduct(id: Int): Call<ProductsResult> =
+        productsApiService.getSingleProduct(id = id)
+    override suspend fun updateProduct(id: Int, product: ProductsResult): Call<Products> =
         productsApiService.updateProduct(id = id, body = product)
     override suspend fun login(user: User): Response<UserResponse> =
         productsApiService.login(user)

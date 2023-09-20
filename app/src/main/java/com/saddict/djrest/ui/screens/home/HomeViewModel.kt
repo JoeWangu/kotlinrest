@@ -5,7 +5,7 @@ import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.saddict.djrest.R
-import com.saddict.djrest.data.AppRepository
+import com.saddict.djrest.data.manager.AppRepository
 import com.saddict.djrest.data.sources.AppDaoRepository
 import com.saddict.djrest.model.local.ProductEntity
 import kotlinx.coroutines.Dispatchers
@@ -44,7 +44,7 @@ class ProductsViewModel(repository: AppDaoRepository, context: Context) : ViewMo
     }.stateIn(
         scope = viewModelScope,
         initialValue = ProductsUiState.Loading,
-        started = SharingStarted.WhileSubscribed(5_000)
+        started = SharingStarted.WhileSubscribed(5_000L)
     )
 
 //    fun getProducts() {

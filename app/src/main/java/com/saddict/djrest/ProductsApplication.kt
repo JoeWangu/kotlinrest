@@ -1,7 +1,7 @@
 package com.saddict.djrest
 
 import android.app.Application
-import com.saddict.djrest.data.AppRepository
+import com.saddict.djrest.data.manager.AppRepository
 import com.saddict.djrest.data.sources.local.AppDatabaseContainer
 
 class ProductsApplication: Application() {

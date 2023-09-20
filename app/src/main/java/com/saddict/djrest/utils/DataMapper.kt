@@ -1,4 +1,4 @@
-package com.saddict.djrest.data
+package com.saddict.djrest.utils
 
 import com.saddict.djrest.model.local.ProductEntity
 import com.saddict.djrest.model.remote.ProductsResult

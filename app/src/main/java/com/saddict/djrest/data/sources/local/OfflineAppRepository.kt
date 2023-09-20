@@ -1,6 +1,6 @@
 package com.saddict.djrest.data.sources.local
 
-import com.saddict.djrest.data.ProductDao
+import com.saddict.djrest.data.manager.ProductDao
 import com.saddict.djrest.data.sources.AppDaoRepository
 import com.saddict.djrest.model.local.ProductEntity
 import kotlinx.coroutines.flow.Flow
