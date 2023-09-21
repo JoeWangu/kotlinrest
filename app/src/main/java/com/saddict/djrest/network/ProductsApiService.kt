@@ -31,8 +31,8 @@ interface ProductsApiService {
     ):
             Call<ProductsResult>
     //    TODO:
-    //     1.Complete post requests
-    //     2.Add put requests
+    //     1.Create and register users
+    //     2.Refresh database after updating or saving
 
     //    @Headers("Content-Type:application/json")
     @POST(LOGIN_URL)
@@ -44,8 +44,8 @@ interface ProductsApiService {
 //    )
 //    @Headers("Content-Type:application/json")
     @POST(PRODUCTS_URL)
-    suspend fun postProducts(@Body body: PostProducts): Response<Products>
+    suspend fun postProducts(@Body body: PostProducts): Response<ProductsResult>
 
     @PUT(SINGLE_PRODUCTS_URL)
-    suspend fun updateProduct(@Path("id") id: Int, @Body body: ProductsResult): Call<Products>
+    suspend fun updateProduct(@Path("id") id: Int, @Body body: PostProducts): Response<ProductsResult>
 }

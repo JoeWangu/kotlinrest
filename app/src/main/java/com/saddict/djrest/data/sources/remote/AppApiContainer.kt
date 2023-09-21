@@ -44,15 +44,15 @@ class RequestInterceptor(context: Context) : Interceptor {
 
 class AppApi(context: Context) : AppApiContainer {
     private val baseurl = BASE_URL
-//    private val bodyInterceptor =
-//        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-    private val headerInterceptor =
-        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS)
+    private val bodyInterceptor =
+        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+//    private val headerInterceptor =
+//        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS)
     private val okHttpClient = OkHttpClient()
         .newBuilder()
         .addInterceptor(RequestInterceptor(context))
-//        .addInterceptor(bodyInterceptor)
-        .addInterceptor(headerInterceptor)
+        .addInterceptor(bodyInterceptor)
+//        .addInterceptor(headerInterceptor)
         .build()
     private val retrofit = Retrofit.Builder()
         .addConverterFactory(JacksonConverterFactory.create())

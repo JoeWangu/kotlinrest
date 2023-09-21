@@ -42,10 +42,11 @@ data class ImageArrayResults(
 )
 
 data class PostProducts(
-    val productName: String,
-    val modelNumber: String,
+    val name: String,
+    @Suppress("PropertyName")
+    val model_number: String,
     val specifications: String,
-    val price: Int,
+    val price: Double,
     val image: Int,
     val category: Int,
     val supplier: Int,

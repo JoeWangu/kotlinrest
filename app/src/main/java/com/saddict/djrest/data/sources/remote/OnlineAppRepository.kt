@@ -14,11 +14,11 @@ class OnlineAppRepository(private val productsApiService: ProductsApiService) :
     ApiRepository {
     override suspend fun getProducts(): Products =
         productsApiService.getProducts("json")
-    override suspend fun postProducts(products: PostProducts): Response<Products> =
+    override suspend fun postProducts(products: PostProducts): Response<ProductsResult> =
         productsApiService.postProducts(products)
     override suspend fun getSingleProduct(id: Int): Call<ProductsResult> =
         productsApiService.getSingleProduct(id = id)
-    override suspend fun updateProduct(id: Int, product: ProductsResult): Call<Products> =
+    override suspend fun updateProduct(id: Int, product: PostProducts): Response<ProductsResult> =
         productsApiService.updateProduct(id = id, body = product)
     override suspend fun login(user: User): Response<UserResponse> =
         productsApiService.login(user)

@@ -161,7 +161,7 @@ fun LoginInput(
 //                                    preferenceDataStore.preferenceFlow.collect{
 //                                        ctx.toastUtil(it)
                                     ctx.toastUtil("Login Success")
-                                    delay(5_000L)
+                                    delay(2_000L)
                                     navigateToHome()
 //                                    }
                                 }

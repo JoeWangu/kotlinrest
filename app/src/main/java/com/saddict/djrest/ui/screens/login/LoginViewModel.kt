@@ -15,8 +15,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okio.IOException
 
-//ToDo
-// remove back navigation from home-screen
 sealed interface LoginUiState {
     data class Success(val userResponse: UserResponse) : LoginUiState
     data object Error : LoginUiState
