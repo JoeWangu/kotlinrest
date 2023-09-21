@@ -1,7 +1,8 @@
-package com.saddict.djrest.ui.screens.login
+package com.saddict.djrest.ui.screens.registration
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,6 +31,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -39,6 +41,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.saddict.djrest.R
 import com.saddict.djrest.ui.TopBar
@@ -57,7 +60,7 @@ object LoginDestination : NavigationDestination {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
-//    onLoginBtnClicked: (username: String, password: String) -> Unit,
+    navigateToRegister: () -> Unit,
     navigateToHome: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -73,6 +76,7 @@ fun LoginScreen(
         LoginBody(
 //            onLoginBtnClicked = onLoginBtnClicked,
             navigateToHome = navigateToHome,
+            navigateToRegister = navigateToRegister,
             modifier = Modifier.padding(innerPadding)
         )
     }
@@ -80,7 +84,7 @@ fun LoginScreen(
 
 @Composable
 fun LoginBody(
-//    onLoginBtnClicked: (username: String, password: String) -> Unit,
+    navigateToRegister: () -> Unit,
     navigateToHome: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -97,16 +101,16 @@ fun LoginBody(
             modifier = Modifier.fillMaxSize()
         ) {
             LoginInput(
-                navigateToHome = navigateToHome
-//                onLoginBtnClicked = onLoginBtnClicked
-            )
+                navigateToHome = navigateToHome,
+                navigateToRegister = navigateToRegister
+                )
         }
     }
 }
 
 @Composable
 fun LoginInput(
-//    onLoginBtnClicked: (username: String, password: String) -> Unit,
+    navigateToRegister: () -> Unit,
     navigateToHome: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: LoginViewModel = viewModel(factory = AppViewModelProvider.Factory)
@@ -148,9 +152,6 @@ fun LoginInput(
             Spacer(modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_small)))
             Button(
                 onClick = {
-//                    coroutineScope.launch {
-//                        viewModel.login(username, password)
-////                        navigateToHome()
                     coroutineScope.launch {
                         viewModel.login(username, password)
                         viewModel.uiState.collect { state ->
@@ -158,19 +159,13 @@ fun LoginInput(
                                 LoginUiState.Error -> ctx.toastUtil("Incorrect username or password")
                                 LoginUiState.Loading -> ctx.toastUtil("Waiting for response")
                                 is LoginUiState.Success -> {
-//                                    preferenceDataStore.preferenceFlow.collect{
-//                                        ctx.toastUtil(it)
                                     ctx.toastUtil("Login Success")
                                     delay(2_000L)
                                     navigateToHome()
-//                                    }
                                 }
                             }
                         }
-//                        if (viewModel.uiState.collect{ state ->
-//                            })
                     }
-
                 },
                 modifier = Modifier
             ) {
@@ -191,7 +186,10 @@ fun LoginInput(
                     text = stringResource(id = R.string.reg_here),
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold,
+                    textDecoration = TextDecoration.Underline,
+                    color = Color.Cyan,
                     modifier = Modifier
+                        .clickable { navigateToRegister() }
                 )
             }
 

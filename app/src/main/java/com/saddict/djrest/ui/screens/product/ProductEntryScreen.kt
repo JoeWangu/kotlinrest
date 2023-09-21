@@ -43,7 +43,6 @@ object ProductEntryDestination: NavigationDestination{
 @Composable
 fun ProductEntryScreen(
     navigateBack: () -> Unit,
-    onNavigateUp: () -> Unit,
     canNavigateBack: Boolean = true,
     viewModel: ProductEntryViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
@@ -54,7 +53,7 @@ fun ProductEntryScreen(
             TopBar(
                 title = stringResource(ProductEntryDestination.titleRes),
                 canNavigateBack = canNavigateBack,
-                navigateUp = onNavigateUp
+                navigateUp = navigateBack
             )
         }
     ) { innerPadding ->

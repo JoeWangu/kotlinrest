@@ -8,10 +8,11 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.saddict.djrest.ProductsApplication
 import com.saddict.djrest.ui.screens.home.ProductsViewModel
-import com.saddict.djrest.ui.screens.login.LoginViewModel
+import com.saddict.djrest.ui.screens.registration.LoginViewModel
 import com.saddict.djrest.ui.screens.product.ProductDetailsViewModel
 import com.saddict.djrest.ui.screens.product.ProductEditViewModel
 import com.saddict.djrest.ui.screens.product.ProductEntryViewModel
+import com.saddict.djrest.ui.screens.registration.RegisterViewModel
 
 /**
  * Provides Factory to create instance of ViewModel for the entire Inventory app
@@ -47,6 +48,11 @@ object AppViewModelProvider {
             LoginViewModel(
                 context = productApplication().applicationContext
 //                preferenceDataStore = PreferenceDataStore(productApplication().applicationContext)
+            )
+        }
+        initializer {
+            RegisterViewModel(
+                context = productApplication().applicationContext
             )
         }
     }

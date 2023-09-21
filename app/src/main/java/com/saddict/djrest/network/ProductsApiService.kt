@@ -3,8 +3,11 @@ package com.saddict.djrest.network
 import com.saddict.djrest.model.remote.PostProducts
 import com.saddict.djrest.model.remote.Products
 import com.saddict.djrest.model.remote.ProductsResult
+import com.saddict.djrest.model.remote.RegisterUser
+import com.saddict.djrest.model.remote.RegisterUserResponse
 import com.saddict.djrest.model.remote.User
 import com.saddict.djrest.model.remote.UserResponse
+import com.saddict.djrest.utils.Constants.CREATE_USER_URL
 import com.saddict.djrest.utils.Constants.LOGIN_URL
 import com.saddict.djrest.utils.Constants.PRODUCTS_URL
 import com.saddict.djrest.utils.Constants.SINGLE_PRODUCTS_URL
@@ -21,22 +24,23 @@ interface ProductsApiService {
     @GET(PRODUCTS_URL)
     suspend fun getProducts(
         @Query("format") format: String
-//                            , @Header("Authorization") token: String
+//        ,@Header("Authorization") token: String
     ): Products
 
     @GET(SINGLE_PRODUCTS_URL)
     suspend fun getSingleProduct(
         @Path("id") id: Int
-//                                 , @Header("Authorization") token: String
-    ):
-            Call<ProductsResult>
+//        ,@Header("Authorization") token: String
+    ): Call<ProductsResult>
     //    TODO:
     //     1.Create and register users
     //     2.Refresh database after updating or saving
 
     //    @Headers("Content-Type:application/json")
     @POST(LOGIN_URL)
-    suspend fun login(@Body user: User): Response<UserResponse>
+    suspend fun login(
+        @Body user: User
+    ): Response<UserResponse>
 
     //    @Headers(
 //        "Content-Type: application/json",
@@ -44,8 +48,21 @@ interface ProductsApiService {
 //    )
 //    @Headers("Content-Type:application/json")
     @POST(PRODUCTS_URL)
-    suspend fun postProducts(@Body body: PostProducts): Response<ProductsResult>
+    suspend fun postProducts(
+        @Body body: PostProducts
+    ): Response<ProductsResult>
 
     @PUT(SINGLE_PRODUCTS_URL)
-    suspend fun updateProduct(@Path("id") id: Int, @Body body: PostProducts): Response<ProductsResult>
+    suspend fun updateProduct(
+        @Path("id") id: Int,
+        @Body body: PostProducts
+    ): Response<ProductsResult>
+
+    @POST(CREATE_USER_URL)
+    suspend fun register(
+        @Body user: RegisterUser
+    ): Response<RegisterUserResponse>
+
+//    @POST(LOGOUT_URL)
+//    suspend fun logout()
 }

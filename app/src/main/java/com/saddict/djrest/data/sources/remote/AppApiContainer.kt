@@ -5,6 +5,7 @@ import com.saddict.djrest.data.manager.PreferenceDataStore
 import com.saddict.djrest.data.sources.ApiRepository
 import com.saddict.djrest.network.ProductsApiService
 import com.saddict.djrest.utils.Constants.BASE_URL
+import com.saddict.djrest.utils.Constants.CREATE_USER_URL
 import com.saddict.djrest.utils.Constants.LOGIN_URL
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -27,7 +28,9 @@ class RequestInterceptor(context: Context) : Interceptor {
         println("Outgoing request to ${request.url}")
         println("Token is $token")
 //         Check the request's properties and decide whether to modify it
-        return if (!request.url.encodedPath.contains(LOGIN_URL)) {
+        return if (
+            !request.url.encodedPath.contains(LOGIN_URL)
+            && !request.url.encodedPath.contains(CREATE_USER_URL)) {
             // Add headers
             val requestBuild = request.newBuilder()
                 .addHeader("Authorization", "Token $token")

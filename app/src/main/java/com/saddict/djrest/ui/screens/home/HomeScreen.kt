@@ -1,6 +1,5 @@
 package com.saddict.djrest.ui.screens.home
 
-import android.app.Activity
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.RepeatMode
@@ -73,21 +72,19 @@ import kotlinx.coroutines.launch
 object HomeDestination : NavigationDestination {
     override val route = "home"
     override val titleRes = R.string.app_name
-//    const val productIdArg = "itemId"
-//    val routeWithArgs = "$route/{$productIdArg}"
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-//    onNavigateUp: () -> Unit,
+    navigateToLogin: () -> Unit,
     navigateToItemEntry: () -> Unit,
     navigateToItemDetails: (Int) -> Unit,
     modifier: Modifier = Modifier,
     productsViewModel: ProductsViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-    val activity = LocalContext.current as? Activity
+//    val activity = LocalContext.current as? Activity
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val preferenceDataStore = PreferenceDataStore(context)
@@ -97,7 +94,6 @@ fun HomeScreen(
             TopBar(
                 title = stringResource(HomeDestination.titleRes),
                 canNavigateBack = false,
-//                navigateUp = onNavigateUp,
                 scrollBehavior = scrollBehavior
             )
         },
@@ -122,8 +118,9 @@ fun HomeScreen(
                 coroutineScope.launch {
                     preferenceDataStore.setToken("")
                     context.toastUtil("You have been logged out")
-                    delay(5_000L)
-                    activity?.finish()
+                    delay(2_000L)
+//                    activity?.finish()
+                    navigateToLogin()
                 }
             },
             onSendClick = { summary: String ->
@@ -151,7 +148,7 @@ fun HomeBody(
     modifier: Modifier = Modifier
 ) {
     when (productsUiState) {
-        is ProductsUiState.Loading -> LoadingScreen(modifier = modifier.fillMaxSize())
+        ProductsUiState.Loading -> LoadingScreen(modifier = modifier.fillMaxSize())
         is ProductsUiState.Success -> ProductsBody(
             products = productsUiState.products,
             onProductClick = onProductClick,

@@ -4,6 +4,8 @@ import com.saddict.djrest.model.local.ProductEntity
 import com.saddict.djrest.model.remote.PostProducts
 import com.saddict.djrest.model.remote.Products
 import com.saddict.djrest.model.remote.ProductsResult
+import com.saddict.djrest.model.remote.RegisterUser
+import com.saddict.djrest.model.remote.RegisterUserResponse
 import com.saddict.djrest.model.remote.User
 import com.saddict.djrest.model.remote.UserResponse
 import kotlinx.coroutines.flow.Flow
@@ -16,6 +18,7 @@ interface ApiRepository {
     suspend fun postProducts(products: PostProducts): Response<ProductsResult>
     suspend fun updateProduct(id: Int, product: PostProducts): Response<ProductsResult>
     suspend fun login(user: User): Response<UserResponse>
+    suspend fun register(user: RegisterUser): Response<RegisterUserResponse>
 }
 /**
  * Repository that provides insert, update, delete, and retrieve of [Products] from a given data source.

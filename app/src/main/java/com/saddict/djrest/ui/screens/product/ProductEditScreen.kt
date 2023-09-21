@@ -28,7 +28,6 @@ object ProductEditDestination : NavigationDestination {
 @Composable
 fun ProductEditScreen(
     navigateBack: () -> Unit,
-    onNavigateUp: () -> Unit,
     modifier: Modifier = Modifier,
     canNavigateBack: Boolean = true,
     viewModel: ProductEditViewModel = viewModel(factory = AppViewModelProvider.Factory),
@@ -40,7 +39,7 @@ fun ProductEditScreen(
             TopBar(
                 title = stringResource(id = ProductEditDestination.titleRes),
                 canNavigateBack = canNavigateBack,
-                navigateUp = onNavigateUp
+                navigateUp = navigateBack
             )
         },
         modifier = modifier

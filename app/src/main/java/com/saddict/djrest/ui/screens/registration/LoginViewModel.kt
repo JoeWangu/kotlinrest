@@ -1,4 +1,4 @@
-package com.saddict.djrest.ui.screens.login
+package com.saddict.djrest.ui.screens.registration
 
 import android.content.Context
 import android.util.Log
