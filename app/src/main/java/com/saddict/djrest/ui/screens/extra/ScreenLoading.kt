@@ -27,7 +27,7 @@ object LoadingDestination : NavigationDestination {
 }
 
 @Composable
-fun ScreenLoading(modifier: Modifier = Modifier) {
+fun LoadingScreen(modifier: Modifier = Modifier) {
     val infiniteTransition = rememberInfiniteTransition(label = "loader transition")
     val angle by infiniteTransition.animateFloat(
         initialValue = 0f,

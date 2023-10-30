@@ -5,15 +5,17 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.saddict.djrest.data.manager.PreferenceDataStore
-import com.saddict.djrest.data.sources.remote.AppApi
+import com.saddict.djrest.data.sources.ApiRepository
 import com.saddict.djrest.model.remote.User
 import com.saddict.djrest.model.remote.UserResponse
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okio.IOException
+import javax.inject.Inject
 
 sealed interface LoginUiState {
     data class Success(val userResponse: UserResponse) : LoginUiState
@@ -21,10 +23,13 @@ sealed interface LoginUiState {
     data object Loading : LoginUiState
 }
 
-class LoginViewModel(context: Context) : ViewModel() {
+class LoginViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
+    private val repository: ApiRepository
+    ) : ViewModel() {
     private val _uiState = MutableSharedFlow<LoginUiState>()
     val uiState: SharedFlow<LoginUiState> = _uiState
-    private val repository = AppApi(context).productsRepository
+//    private val repository = AppApi(context).productsRepository
 //    private val encryptManager = KeyStoreManager()
     private val userPreferenceFlow = PreferenceDataStore(context)
 //    abstract var encryptedToken: String

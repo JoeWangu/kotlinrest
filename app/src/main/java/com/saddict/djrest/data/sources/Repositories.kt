@@ -13,7 +13,7 @@ import retrofit2.Call
 import retrofit2.Response
 
 interface ApiRepository {
-    suspend fun getProducts(): Products
+    suspend fun getProducts(page: Int): Products
     suspend fun getSingleProduct(id: Int): Call<ProductsResult>
     suspend fun postProducts(products: PostProducts): Response<ProductsResult>
     suspend fun updateProduct(id: Int, product: PostProducts): Response<ProductsResult>
@@ -23,7 +23,8 @@ interface ApiRepository {
 /**
  * Repository that provides insert, update, delete, and retrieve of [Products] from a given data source.
  */
-interface AppDaoRepository {
+//AppDaoRepository
+interface LocalDataSource {
 //    fun getAllProductsResponseStream(): Flow<Products>
 //    suspend fun insertAll(products: Products)
 //    suspend fun insertProductResponse(productResponse: Products)

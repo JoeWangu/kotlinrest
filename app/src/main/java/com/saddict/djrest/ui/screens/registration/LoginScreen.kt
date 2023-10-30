@@ -42,11 +42,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.saddict.djrest.R
 import com.saddict.djrest.ui.TopBar
 import com.saddict.djrest.ui.navigation.NavigationDestination
-import com.saddict.djrest.ui.screens.AppViewModelProvider
 import com.saddict.djrest.ui.screens.home.HomeDestination
 import com.saddict.djrest.utils.toastUtil
 import kotlinx.coroutines.delay
@@ -113,7 +113,8 @@ fun LoginInput(
     navigateToRegister: () -> Unit,
     navigateToHome: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: LoginViewModel = viewModel(factory = AppViewModelProvider.Factory)
+//    viewModel: LoginViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
     var username by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }

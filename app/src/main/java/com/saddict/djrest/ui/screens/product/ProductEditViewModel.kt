@@ -8,9 +8,11 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.saddict.djrest.data.sources.AppDaoRepository
-import com.saddict.djrest.data.sources.remote.AppApi
+import com.saddict.djrest.data.manager.usecases.GetAllProductsUseCase
+import com.saddict.djrest.data.manager.usecases.GetProductUseCase
+import com.saddict.djrest.data.sources.ApiRepository
 import com.saddict.djrest.model.local.ProductEntity
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -19,6 +21,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okio.IOException
+import javax.inject.Inject
 
 sealed interface ProductUpdateUiCondition{
     data object Success: ProductUpdateUiCondition
@@ -26,12 +29,16 @@ sealed interface ProductUpdateUiCondition{
     data object Error: ProductUpdateUiCondition
 }
 
-class ProductEditViewModel(
+@HiltViewModel
+class ProductEditViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    context: Context,
-    private val repository: AppDaoRepository
+//    context: Context,
+//    private val repository: AppDaoRepository
+    private val useCase: GetProductUseCase,
+//    provide appApi using hilt
+    private val repository: ApiRepository
 ) : ViewModel() {
-    private val apiRepo = AppApi(context).productsRepository
+//    private val apiRepo = AppApi(context).productsRepository
     var productEditUiState by mutableStateOf(ProductEntryUiState())
         private set
     private val productId: Int = checkNotNull(savedStateHandle[ProductEditDestination.productIdArg])
@@ -47,7 +54,7 @@ class ProductEditViewModel(
 
     init {
         viewModelScope.launch {
-            productEditUiState = repository.getProduct(productId)
+            productEditUiState = useCase.getProduct(productId)
                 .filterNotNull()
                 .first()
                 .toProductEditUiState(true)
@@ -60,7 +67,7 @@ class ProductEditViewModel(
                 try {
                     if (validateInput(productEditUiState.entryDetails)) {
                         _uiCondition.emit(ProductUpdateUiCondition.Loading)
-                        val updateResponse = apiRepo.updateProduct(
+                        val updateResponse = repository.updateProduct(
                             id = productId,
                             product = productEditUiState.entryDetails.toPostProducts()
                         )

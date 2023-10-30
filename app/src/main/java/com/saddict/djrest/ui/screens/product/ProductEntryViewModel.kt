@@ -7,14 +7,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.saddict.djrest.data.sources.remote.AppApi
+import com.saddict.djrest.data.sources.ApiRepository
 import com.saddict.djrest.model.remote.PostProducts
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okio.IOException
+import javax.inject.Inject
 
 sealed interface ProductEntryUiCondition{
     data object Success: ProductEntryUiCondition
@@ -22,13 +24,18 @@ sealed interface ProductEntryUiCondition{
     data object Loading: ProductEntryUiCondition
 }
 
-class ProductEntryViewModel(context: Context) : ViewModel() {
+@HiltViewModel
+class ProductEntryViewModel @Inject constructor(
+//    context: Context
+    private val repository: ApiRepository
+) : ViewModel() {
     private val _uiCondition = MutableSharedFlow<ProductEntryUiCondition>()
     val uiCondition: SharedFlow<ProductEntryUiCondition> = _uiCondition
     var productEntryUiState by mutableStateOf(ProductEntryUiState())
         private set
 
-    private val apiRepo = AppApi(context).productsRepository
+//    private val apiRepo = AppApi(context).productsRepository
+    private val apiRepo = repository
 
     fun updateUiState(entryDetails: EntryDetails) {
         productEntryUiState =
@@ -44,6 +51,7 @@ class ProductEntryViewModel(context: Context) : ViewModel() {
                 try {
                     if (validateInput()) {
                         _uiCondition.emit(ProductEntryUiCondition.Loading)
+//                        val response = apiRepo.postProducts(productEntryUiState.entryDetails.toPostProducts())
                         val response = apiRepo.postProducts(productEntryUiState.entryDetails.toPostProducts())
                         if (response.isSuccessful){
                             val responseBody = response.body()

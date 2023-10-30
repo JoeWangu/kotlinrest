@@ -38,5 +38,6 @@
     <string name="product_supplier_req">Product Supplier*</string>
     <string name="save_action">Save</string>
     <string name="product_edit_title">Update Product</string>
+    <string name="something_went_wrong">something went wrong</string>
 
 </resources>

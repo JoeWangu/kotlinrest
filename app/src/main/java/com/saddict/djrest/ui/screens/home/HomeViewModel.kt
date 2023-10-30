@@ -1,51 +1,109 @@
 package com.saddict.djrest.ui.screens.home
 
-import android.content.Context
-import android.content.Intent
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.saddict.djrest.R
-import com.saddict.djrest.data.manager.AppRepository
-import com.saddict.djrest.data.sources.AppDaoRepository
-import com.saddict.djrest.model.local.ProductEntity
+import com.saddict.djrest.data.sources.ApiRepository
+import com.saddict.djrest.model.remote.Products
+import com.saddict.djrest.model.remote.ProductsResult
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okio.IOException
+import javax.inject.Inject
 
+//sealed interface ProductsUiState {
+//    data class Success(val products: List<ProductsResult> = listOf()) : ProductsUiState
+//
+//    object Error : ProductsUiState
+//    object Loading : ProductsUiState
+//}
 sealed interface ProductsUiState {
-    data class Success(val products: List<ProductEntity?> = listOf()) : ProductsUiState
-//    data object Error : ProductsUiState
+    data class Success(val products: Products) : ProductsUiState
+    data object Error : ProductsUiState
     data object Loading : ProductsUiState
 }
 
-class ProductsViewModel(repository: AppDaoRepository, context: Context) : ViewModel() {
-    //    var productsUiState: ProductsUiState by mutableStateOf(ProductsUiState.Loading)
-    private val repo = AppRepository(context)
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+//    repository: AppDaoRepository,
+//    context: Context,
+//    private val repo: AppRepository,
+//    private val productsApiService: ProductsApiService
+    private val repository: ApiRepository
+) : ViewModel() {
+    var uiState: ProductsUiState by mutableStateOf(ProductsUiState.Loading)
+        private set
 
     init {
-        runRepo()
-//        getProducts()
+        getProducts()
     }
 
-    private fun runRepo() {
+    fun getProducts() {
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                repo.fetchDataAndStore()
-            }
+//            withContext(Dispatchers.IO) {
+                uiState = ProductsUiState.Loading
+                uiState = try {
+                    ProductsUiState.Success(repository.getProducts(1))
+                } catch (e: IOException) {
+                    ProductsUiState.Error
+                }
+//            }
         }
     }
 
-    val productsUiState: StateFlow<ProductsUiState> = repository.getAllProducts().map {
-        ProductsUiState.Success(it)
-    }.stateIn(
-        scope = viewModelScope,
-        initialValue = ProductsUiState.Loading,
-        started = SharingStarted.WhileSubscribed(5_000L)
-    )
+//    private val repo = AppRepository(context = context)
+//    val productsUiState: StateFlow<ProductsUiState> = repository.getAllProducts().map {
+//        ProductsUiState.Success(it)
+//    }.stateIn(
+//        scope = viewModelScope,
+//        initialValue = ProductsUiState.Loading,
+//        started = SharingStarted.WhileSubscribed(5_000L)
+//    )
+
+//    private fun getPageProducts() = Pager(
+//        config = PagingConfig(
+//            pageSize = 5
+//        ),
+//        pagingSourceFactory = { ProductPagingSource(productsApiService) }
+//    ).flow
+//
+//    fun productFlow(): Flow<PagingData<ProductsResult>> =
+//        getPageProducts().cachedIn(viewModelScope)
+
+//    fun productFlow(): Flow<PagingData<ProductsResult>> =
+//        repo.getPageProducts().cachedIn(viewModelScope)
+    //    var productsUiState: ProductsUiState by mutableStateOf(ProductsUiState.Loading)
+//    private val repo = AppRepository(context)
+//    private var pageNumber = 1
+
+//    init {
+//        runRepo()
+////        getProducts()
+//    }
+
+//    private fun runRepo() {
+//        viewModelScope.launch {
+//            withContext(Dispatchers.IO) {
+//                repo.fetchDataAndStore(1)
+//            }
+//        }
+//    }
+
+//    fun getMoreData() {
+//        viewModelScope.launch {
+//            withContext(Dispatchers.IO) {
+//                if (pageNumber in 1..3) {
+//                    repo.fetchDataAndStore(pageNumber)
+//                    pageNumber++
+//                }
+//            }
+//        }
+//    }
 
 //    fun getProducts() {
 //        viewModelScope.launch {
@@ -65,18 +123,18 @@ class ProductsViewModel(repository: AppDaoRepository, context: Context) : ViewMo
 //        }
 //    }
 
-    fun shareProduct(context: Context, summary: String) {
-        val intent = Intent(Intent.ACTION_SEND).apply {
-            type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT, summary)
-        }
-        context.startActivity(
-            Intent.createChooser(
-                intent,
-                context.getString(R.string.app_name)
-            )
-        )
-    }
+//    fun shareProduct(context: Context, summary: String) {
+//        val intent = Intent(Intent.ACTION_SEND).apply {
+//            type = "text/plain"
+//            putExtra(Intent.EXTRA_TEXT, summary)
+//        }
+//        context.startActivity(
+//            Intent.createChooser(
+//                intent,
+//                context.getString(R.string.app_name)
+//            )
+//        )
+//    }
 }
 
 //    fun getProducts() {
@@ -162,7 +220,7 @@ class ProductsViewModel(repository: AppDaoRepository, context: Context) : ViewMo
 //    companion object {
 //        val Factory: ViewModelProvider.Factory = viewModelFactory {
 //            initializer {
-//                val application = (this[APPLICATION_KEY] as ProductsApplication)
+//                val application = (this[APPLICATION_KEY] as MyApp)
 //                val productsRepository = application.container.productsDaoRepository
 //                ProductsViewModel(
 //                    repository = productsRepository,

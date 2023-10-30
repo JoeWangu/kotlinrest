@@ -8,11 +8,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.saddict.djrest.R
 import com.saddict.djrest.ui.TopBar
 import com.saddict.djrest.ui.navigation.NavigationDestination
-import com.saddict.djrest.ui.screens.AppViewModelProvider
 import com.saddict.djrest.utils.toastUtil
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -30,7 +30,8 @@ fun ProductEditScreen(
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
     canNavigateBack: Boolean = true,
-    viewModel: ProductEditViewModel = viewModel(factory = AppViewModelProvider.Factory),
+//    viewModel: ProductEditViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    viewModel: ProductEditViewModel = hiltViewModel()
 ) {
     val coroutineScope = rememberCoroutineScope()
     val ctx = LocalContext.current

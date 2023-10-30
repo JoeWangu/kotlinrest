@@ -73,7 +73,7 @@ fun TopBar(
 
 //@OptIn(ExperimentalMaterial3Api::class)
 //@Composable
-//fun RestApp(
+//fun MyApp(
 //    modifier: Modifier = Modifier,
 //    navController: NavHostController = rememberNavController()
 //) {

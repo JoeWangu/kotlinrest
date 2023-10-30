@@ -1,27 +1,35 @@
 package com.saddict.djrest.ui.screens.registration
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.saddict.djrest.data.manager.AppUiState
 import com.saddict.djrest.data.manager.PreferenceDataStore
-import com.saddict.djrest.data.sources.remote.AppApi
+import com.saddict.djrest.data.sources.ApiRepository
 import com.saddict.djrest.model.remote.RegisterUser
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okio.IOException
+import javax.inject.Inject
 
 //ToDo
 // 1.When registering catch duplicate user error and send appropriate response
 
-class RegisterViewModel(context: Context) : ViewModel() {
+@HiltViewModel
+class RegisterViewModel @Inject constructor(
+    @SuppressLint("StaticFieldLeak") @ApplicationContext private val context: Context,
+    private val repository: ApiRepository
+) : ViewModel() {
     private val _uiState = MutableSharedFlow<AppUiState>()
     val uiState: SharedFlow<AppUiState> = _uiState
-    private val repository = AppApi(context).productsRepository
+//    private val repository = AppApi(context).productsRepository
     private val userPreferenceFlow = PreferenceDataStore(context)
 
     fun register(

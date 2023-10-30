@@ -3,6 +3,13 @@ package com.saddict.djrest.data.sources.remote
 import android.content.Context
 import com.saddict.djrest.data.manager.PreferenceDataStore
 import com.saddict.djrest.data.sources.ApiRepository
+import com.saddict.djrest.model.remote.PostProducts
+import com.saddict.djrest.model.remote.Products
+import com.saddict.djrest.model.remote.ProductsResult
+import com.saddict.djrest.model.remote.RegisterUser
+import com.saddict.djrest.model.remote.RegisterUserResponse
+import com.saddict.djrest.model.remote.User
+import com.saddict.djrest.model.remote.UserResponse
 import com.saddict.djrest.network.ProductsApiService
 import com.saddict.djrest.utils.Constants.BASE_URL
 import com.saddict.djrest.utils.Constants.CREATE_USER_URL
@@ -11,6 +18,7 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
 
@@ -45,30 +53,30 @@ class RequestInterceptor(context: Context) : Interceptor {
     }
 }
 
-class AppApi(context: Context) : AppApiContainer {
-    private val baseurl = BASE_URL
-    private val bodyInterceptor =
-        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-//    private val headerInterceptor =
-//        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS)
-    private val okHttpClient = OkHttpClient()
-        .newBuilder()
-        .addInterceptor(RequestInterceptor(context))
-        .addInterceptor(bodyInterceptor)
-//        .addInterceptor(headerInterceptor)
-        .build()
-    private val retrofit = Retrofit.Builder()
-        .addConverterFactory(JacksonConverterFactory.create())
-        .client(okHttpClient)
-        .baseUrl(baseurl)
-        .build()
-    private val retrofitService: ProductsApiService by lazy {
-        retrofit.create(ProductsApiService::class.java)
-    }
-    override val productsRepository: ApiRepository by lazy {
-        OnlineAppRepository(retrofitService)
-    }
-}
+//class AppApi(context: Context) : AppApiContainer {
+//    private val baseurl = BASE_URL
+//    private val bodyInterceptor =
+//        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+////    private val headerInterceptor =
+////        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS)
+//    private val okHttpClient = OkHttpClient()
+//        .newBuilder()
+//        .addInterceptor(RequestInterceptor(context))
+//        .addInterceptor(bodyInterceptor)
+////        .addInterceptor(headerInterceptor)
+//        .build()
+//    private val retrofit = Retrofit.Builder()
+//        .addConverterFactory(JacksonConverterFactory.create())
+//        .client(okHttpClient)
+//        .baseUrl(baseurl)
+//        .build()
+//    private val retrofitService: ProductsApiService by lazy {
+//        retrofit.create(ProductsApiService::class.java)
+//    }
+//    override val productsRepository: ApiRepository by lazy {
+//        OnlineAppRepository(retrofitService)
+//    }
+//}
 
 //object RequestInterceptor: Interceptor {
 //    override fun intercept(chain: Interceptor.Chain): Response {
@@ -85,17 +93,5 @@ class AppApi(context: Context) : AppApiContainer {
 //            .build()
 //        println("request header is ${requestBuild.headers}")
 //        return chain.proceed(requestBuild)
-//    }
-//}
-
-//class AuthInterceptor(context: Context): Interceptor{
-////    private val sessionManager = SessionManager(context)
-//    override fun intercept(chain: Interceptor.Chain): Response {
-//        val request = chain.request().newBuilder()
-//        // If token has been saved, add it to the request
-//        sessionManager.fetchAuthToken()?.let {
-//            request.addHeader("Authorization", "Token")
-//        }
-//        return chain.proceed(request.build())
 //    }
 //}

@@ -23,11 +23,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.saddict.djrest.R
 import com.saddict.djrest.ui.TopBar
 import com.saddict.djrest.ui.navigation.NavigationDestination
-import com.saddict.djrest.ui.screens.AppViewModelProvider
 import com.saddict.djrest.utils.toastUtil
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -44,7 +44,8 @@ object ProductEntryDestination: NavigationDestination{
 fun ProductEntryScreen(
     navigateBack: () -> Unit,
     canNavigateBack: Boolean = true,
-    viewModel: ProductEntryViewModel = viewModel(factory = AppViewModelProvider.Factory)
+//    viewModel: ProductEntryViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    viewModel: ProductEntryViewModel = hiltViewModel()
 ) {
     val coroutineScope = rememberCoroutineScope()
     val ctx = LocalContext.current

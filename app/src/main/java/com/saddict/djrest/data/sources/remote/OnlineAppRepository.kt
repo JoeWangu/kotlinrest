@@ -11,19 +11,20 @@ import com.saddict.djrest.model.remote.UserResponse
 import com.saddict.djrest.network.ProductsApiService
 import retrofit2.Call
 import retrofit2.Response
+import javax.inject.Inject
 
-class OnlineAppRepository(private val productsApiService: ProductsApiService) :
+class OnlineAppRepository @Inject constructor(private val api: ProductsApiService) :
     ApiRepository {
-    override suspend fun getProducts(): Products =
-        productsApiService.getProducts("json")
+    override suspend fun getProducts(page: Int): Products =
+        api.getProducts(format = "json", page = page)
     override suspend fun postProducts(products: PostProducts): Response<ProductsResult> =
-        productsApiService.postProducts(products)
+        api.postProducts(products)
     override suspend fun getSingleProduct(id: Int): Call<ProductsResult> =
-        productsApiService.getSingleProduct(id = id)
+        api.getSingleProduct(id = id)
     override suspend fun updateProduct(id: Int, product: PostProducts)
-    : Response<ProductsResult> = productsApiService.updateProduct(id = id, body = product)
+    : Response<ProductsResult> = api.updateProduct(id = id, body = product)
     override suspend fun login(user: User): Response<UserResponse> =
-        productsApiService.login(user)
+        api.login(user)
     override suspend fun register(user: RegisterUser)
-    : Response<RegisterUserResponse> = productsApiService.register(user)
+    : Response<RegisterUserResponse> = api.register(user)
 }

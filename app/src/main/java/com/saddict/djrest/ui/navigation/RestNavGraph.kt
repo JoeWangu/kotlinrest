@@ -15,7 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.saddict.djrest.data.manager.PreferenceDataStore
 import com.saddict.djrest.ui.screens.extra.LoadingDestination
-import com.saddict.djrest.ui.screens.extra.ScreenLoading
+import com.saddict.djrest.ui.screens.extra.LoadingScreen
 import com.saddict.djrest.ui.screens.home.HomeDestination
 import com.saddict.djrest.ui.screens.home.HomeScreen
 import com.saddict.djrest.ui.screens.product.ProductDetailsDestination
@@ -62,7 +62,7 @@ fun RestNavHost(
         modifier = modifier
     ) {
         composable(route = LoadingDestination.route) {
-            ScreenLoading()
+            LoadingScreen()
         }
         composable(route = LoginDestination.route) {
             LoginScreen(
@@ -89,9 +89,9 @@ fun RestNavHost(
                 pressedTime = System.currentTimeMillis()
             }
             HomeScreen(
-                navigateToItemDetails = { navController.navigate("${ProductDetailsDestination.route}/${it}") },
-                navigateToItemEntry = { navController.navigate(ProductEntryDestination.route) },
-                navigateToLogin = { navController.navigate(LoginDestination.route) }
+//                navigateToItemDetails = { navController.navigate("${ProductDetailsDestination.route}/${it}") },
+//                navigateToItemEntry = { navController.navigate(ProductEntryDestination.route) },
+//                navigateToLogin = { navController.navigate(LoginDestination.route) }
             )
         }
         composable(

@@ -23,7 +23,8 @@ import retrofit2.http.Query
 interface ProductsApiService {
     @GET(PRODUCTS_URL)
     suspend fun getProducts(
-        @Query("format") format: String
+        @Query("format") format: String,
+        @Query("page") page: Int
 //        ,@Header("Authorization") token: String
     ): Products
 
@@ -33,8 +34,7 @@ interface ProductsApiService {
 //        ,@Header("Authorization") token: String
     ): Call<ProductsResult>
     //    TODO:
-    //     1.Create and register users
-    //     2.Refresh database after updating or saving
+    //     1.Refresh database after updating or saving
 
     //    @Headers("Content-Type:application/json")
     @POST(LOGIN_URL)

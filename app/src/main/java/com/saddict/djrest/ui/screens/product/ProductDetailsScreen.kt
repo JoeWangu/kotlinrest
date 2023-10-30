@@ -21,12 +21,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.saddict.djrest.R
 import com.saddict.djrest.model.local.ProductEntity
 import com.saddict.djrest.ui.TopBar
 import com.saddict.djrest.ui.navigation.NavigationDestination
-import com.saddict.djrest.ui.screens.AppViewModelProvider
 
 object ProductDetailsDestination : NavigationDestination {
     override val route = "product_details"
@@ -41,7 +41,8 @@ fun ProductDetailsScreen(
     navigateToEditProduct: (Int) -> Unit,
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
-    productDetailsViewModel: ProductDetailsViewModel = viewModel(factory = AppViewModelProvider.Factory)
+//    productDetailsViewModel: ProductDetailsViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    productDetailsViewModel: ProductDetailsViewModel = hiltViewModel()
 ) {
     val uiState = productDetailsViewModel.uiState.collectAsState()
     Scaffold(

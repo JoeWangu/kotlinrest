@@ -1,15 +1,15 @@
 package com.saddict.djrest.data.manager
 
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Upsert
 import com.saddict.djrest.model.local.ProductEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ProductDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+//    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Upsert
     suspend fun insertAll(product: List<ProductEntity>)
 
     @Query("SELECT * from products WHERE id = :id")
