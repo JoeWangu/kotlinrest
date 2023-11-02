@@ -8,6 +8,7 @@ import com.saddict.djrest.data.manager.PreferenceDataStore
 import com.saddict.djrest.data.sources.ApiRepository
 import com.saddict.djrest.model.remote.User
 import com.saddict.djrest.model.remote.UserResponse
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -23,6 +24,7 @@ sealed interface LoginUiState {
     data object Loading : LoginUiState
 }
 
+@HiltViewModel
 class LoginViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val repository: ApiRepository

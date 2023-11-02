@@ -22,9 +22,9 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
 
-interface AppApiContainer {
-    val productsRepository: ApiRepository
-}
+//interface AppApiContainer {
+//    val productsRepository: ApiRepository
+//}
 
 class RequestInterceptor(context: Context) : Interceptor {
     private val preferenceDataStore = PreferenceDataStore(context)

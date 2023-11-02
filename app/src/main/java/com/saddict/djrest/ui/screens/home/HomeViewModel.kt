@@ -5,12 +5,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.cachedIn
+import androidx.paging.map
 import com.saddict.djrest.data.sources.ApiRepository
+import com.saddict.djrest.data.sources.local.ProductDatabase
+import com.saddict.djrest.model.local.ProductEntity
 import com.saddict.djrest.model.remote.Products
 import com.saddict.djrest.model.remote.ProductsResult
+import com.saddict.djrest.utils.DataMapper.Companion.mapToResults
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okio.IOException
@@ -22,11 +29,11 @@ import javax.inject.Inject
 //    object Error : ProductsUiState
 //    object Loading : ProductsUiState
 //}
-sealed interface ProductsUiState {
-    data class Success(val products: Products) : ProductsUiState
-    data object Error : ProductsUiState
-    data object Loading : ProductsUiState
-}
+//sealed interface ProductsUiState {
+//    data class Success(val products: Products) : ProductsUiState
+//    data object Error : ProductsUiState
+//    data object Loading : ProductsUiState
+//}
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -34,27 +41,43 @@ class HomeViewModel @Inject constructor(
 //    context: Context,
 //    private val repo: AppRepository,
 //    private val productsApiService: ProductsApiService
-    private val repository: ApiRepository
+//    private val repository: ApiRepository,
+    pager: Pager<Int, ProductEntity>,
+    private val productDb: ProductDatabase
 ) : ViewModel() {
-    var uiState: ProductsUiState by mutableStateOf(ProductsUiState.Loading)
-        private set
+//    var uiState: ProductsUiState by mutableStateOf(ProductsUiState.Loading)
+//        private set
 
-    init {
-        getProducts()
-    }
+    val productPagingFlow = pager
+        .flow
+        .map { pagingData ->
+            pagingData.map { it.mapToResults() }
+        }
+        .cachedIn(viewModelScope)
 
-    fun getProducts() {
+    fun deleteAll(){
         viewModelScope.launch {
-//            withContext(Dispatchers.IO) {
-                uiState = ProductsUiState.Loading
-                uiState = try {
-                    ProductsUiState.Success(repository.getProducts(1))
-                } catch (e: IOException) {
-                    ProductsUiState.Error
-                }
-//            }
+            withContext(Dispatchers.IO){
+                productDb.productDao().deleteAllProducts()
+            }
         }
     }
+//    init {
+//        getProducts()
+//    }
+
+//    fun getProducts() {
+//        viewModelScope.launch {
+////            withContext(Dispatchers.IO) {
+//                uiState = ProductsUiState.Loading
+//                uiState = try {
+//                    ProductsUiState.Success(repository.getProducts(1, pageCount = 5))
+//                } catch (e: IOException) {
+//                    ProductsUiState.Error
+//                }
+////            }
+//        }
+//    }
 
 //    private val repo = AppRepository(context = context)
 //    val productsUiState: StateFlow<ProductsUiState> = repository.getAllProducts().map {

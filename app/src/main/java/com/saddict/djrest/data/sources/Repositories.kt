@@ -1,5 +1,7 @@
 package com.saddict.djrest.data.sources
 
+import androidx.paging.PagingSource
+import com.saddict.djrest.data.manager.CustomPagingSource
 import com.saddict.djrest.model.local.ProductEntity
 import com.saddict.djrest.model.remote.PostProducts
 import com.saddict.djrest.model.remote.Products
@@ -14,6 +16,7 @@ import retrofit2.Response
 
 interface ApiRepository {
     suspend fun getProducts(page: Int): Products
+//    , pageCount: Int
     suspend fun getSingleProduct(id: Int): Call<ProductsResult>
     suspend fun postProducts(products: PostProducts): Response<ProductsResult>
     suspend fun updateProduct(id: Int, product: PostProducts): Response<ProductsResult>
@@ -34,6 +37,8 @@ interface LocalDataSource {
     suspend fun insertAll(products: List<ProductEntity>)
     fun getAllProducts(): Flow<List<ProductEntity>>
     fun getProduct(id: Int): Flow<ProductEntity?>
+//    fun loadAllPaged(): PagingSource<Int, ProductEntity>
+//    fun customLoadAllPaged(): CustomPagingSource
 
 //    suspend fun insertProduct(product: List<ProductsResult>)
 //    suspend fun deleteProduct(product: ProductsResult)

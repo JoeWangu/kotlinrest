@@ -24,7 +24,8 @@ interface ProductsApiService {
     @GET(PRODUCTS_URL)
     suspend fun getProducts(
         @Query("format") format: String,
-        @Query("page") page: Int
+        @Query("page") page: Int,
+//        @Query("per_page")pageCount: Int
 //        ,@Header("Authorization") token: String
     ): Products
 

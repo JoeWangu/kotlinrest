@@ -13,10 +13,12 @@ import retrofit2.Call
 import retrofit2.Response
 import javax.inject.Inject
 
-class OnlineAppRepository @Inject constructor(private val api: ProductsApiService) :
-    ApiRepository {
+class OnlineAppRepository @Inject constructor(
+    private val api: ProductsApiService
+) : ApiRepository {
     override suspend fun getProducts(page: Int): Products =
         api.getProducts(format = "json", page = page)
+//    , pageCount = pageCount
     override suspend fun postProducts(products: PostProducts): Response<ProductsResult> =
         api.postProducts(products)
     override suspend fun getSingleProduct(id: Int): Call<ProductsResult> =

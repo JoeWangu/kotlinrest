@@ -1,5 +1,6 @@
 package com.saddict.djrest.data.manager
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
@@ -18,8 +19,14 @@ interface ProductDao {
     @Query("SELECT * from products ORDER BY id ASC")
     fun getAllProducts(): Flow<List<ProductEntity>>
 
-//    @Query("DELETE FROM products")
-//    suspend fun deleteAllProducts()
+//    @Query("SELECT * from products")
+//    fun pagingSource(): PagingSource<Int, ProductEntity>
+
+//    @Query("SELECT * from products")
+//    fun customPagingSource(): CustomPagingSource
+
+    @Query("DELETE FROM products")
+    suspend fun deleteAllProducts()
 
 //    @Update
 //    suspend fun updateProductResponse(productResponse: Products)

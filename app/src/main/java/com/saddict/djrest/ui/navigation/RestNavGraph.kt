@@ -89,9 +89,9 @@ fun RestNavHost(
                 pressedTime = System.currentTimeMillis()
             }
             HomeScreen(
-//                navigateToItemDetails = { navController.navigate("${ProductDetailsDestination.route}/${it}") },
-//                navigateToItemEntry = { navController.navigate(ProductEntryDestination.route) },
-//                navigateToLogin = { navController.navigate(LoginDestination.route) }
+                navigateToItemDetails = { navController.navigate("${ProductDetailsDestination.route}/${it}") },
+                navigateToItemEntry = { navController.navigate(ProductEntryDestination.route) },
+                navigateToLogin = { navController.navigate(LoginDestination.route) }
             )
         }
         composable(
