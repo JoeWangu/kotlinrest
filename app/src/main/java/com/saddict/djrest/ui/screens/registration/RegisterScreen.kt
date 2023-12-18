@@ -35,13 +35,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.saddict.djrest.R
 import com.saddict.djrest.data.manager.AppUiState
-import com.saddict.djrest.ui.TopBar
 import com.saddict.djrest.ui.navigation.NavigationDestination
 import com.saddict.djrest.ui.screens.home.HomeDestination
 import com.saddict.djrest.utils.toastUtil
+import com.saddict.djrest.utils.utilscreens.RestTopAppBar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -60,7 +59,7 @@ fun RegisterScreen(
     Scaffold(
         modifier = modifier,
         topBar = {
-            TopBar(
+            RestTopAppBar(
                 title = stringResource(HomeDestination.titleRes),
                 canNavigateBack = true,
                 navigateUp = navigateBack
@@ -158,8 +157,11 @@ fun RegisterInput(
                         viewModel.register(username = username, email = email, password = password)
                         viewModel.uiState.collect { state ->
                             when (state) {
-                                AppUiState.Error -> ctx.toastUtil("Unable to register " +
-                                        "please try again later")
+                                AppUiState.Error -> ctx.toastUtil(
+                                    "Unable to register " +
+                                            "please try again later"
+                                )
+
                                 AppUiState.Loading -> ctx.toastUtil("Waiting for response")
                                 is AppUiState.Success -> {
 

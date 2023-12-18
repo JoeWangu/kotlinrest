@@ -3,7 +3,7 @@ package com.saddict.djrest.di
 import android.content.Context
 import com.saddict.djrest.data.sources.remote.RequestInterceptor
 import com.saddict.djrest.network.ProductsApiService
-import com.saddict.djrest.utils.Constants
+import com.saddict.djrest.prop.Prop
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,7 +29,7 @@ object ApiModule {
             .build()
 
         return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
+            .baseUrl(Prop.BASE_URL)
             .addConverterFactory(JacksonConverterFactory.create())
             .client(okHttpClient)
             .build()

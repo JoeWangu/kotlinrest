@@ -1,8 +1,8 @@
 package com.saddict.djrest.data.sources
 
 import androidx.paging.PagingSource
-import com.saddict.djrest.data.manager.CustomPagingSource
 import com.saddict.djrest.model.local.ProductEntity
+import com.saddict.djrest.model.local.ProductFavourites
 import com.saddict.djrest.model.remote.PostProducts
 import com.saddict.djrest.model.remote.Products
 import com.saddict.djrest.model.remote.ProductsResult
@@ -37,6 +37,7 @@ interface LocalDataSource {
     suspend fun insertAll(products: List<ProductEntity>)
     fun getAllProducts(): Flow<List<ProductEntity>>
     fun getProduct(id: Int): Flow<ProductEntity?>
+    suspend fun getFavourites(): Flow<List<ProductFavourites>>
 //    fun loadAllPaged(): PagingSource<Int, ProductEntity>
 //    fun customLoadAllPaged(): CustomPagingSource
 

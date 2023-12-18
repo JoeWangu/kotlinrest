@@ -24,17 +24,16 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.saddict.djrest.R
-import com.saddict.djrest.ui.TopBar
 import com.saddict.djrest.ui.navigation.NavigationDestination
 import com.saddict.djrest.utils.toastUtil
+import com.saddict.djrest.utils.utilscreens.RestTopAppBar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.Currency
 import java.util.Locale
 
-object ProductEntryDestination: NavigationDestination{
+object ProductEntryDestination : NavigationDestination {
     override val route: String = "product_entry"
     override val titleRes: Int = R.string.product_entry_title
 }
@@ -51,7 +50,7 @@ fun ProductEntryScreen(
     val ctx = LocalContext.current
     Scaffold(
         topBar = {
-            TopBar(
+            RestTopAppBar(
                 title = stringResource(ProductEntryDestination.titleRes),
                 canNavigateBack = canNavigateBack,
                 navigateUp = navigateBack
@@ -68,12 +67,13 @@ fun ProductEntryScreen(
                 // be cancelled - since the scope is bound to composition.
                 coroutineScope.launch {
                     viewModel.saveProduct()
-                    viewModel.uiCondition.collect{ state ->
-                        when(state){
+                    viewModel.uiCondition.collect { state ->
+                        when (state) {
                             ProductEntryUiCondition.Error -> {
                                 ctx.toastUtil("Could not save")
                                 navigateBack()
                             }
+
                             ProductEntryUiCondition.Loading -> ctx.toastUtil("Saving Product")
                             is ProductEntryUiCondition.Success -> {
                                 ctx.toastUtil("Saved Successfully")

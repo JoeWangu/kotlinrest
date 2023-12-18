@@ -1,7 +1,10 @@
 package com.saddict.djrest.data.manager
 
-/*import android.security.keystore.KeyGenParameterSpec
+/*
+import android.os.Build
+import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
+import androidx.annotation.RequiresApi
 import java.io.InputStream
 import java.io.OutputStream
 import java.security.KeyStore
@@ -46,56 +49,77 @@ class KeyStoreManager {
         }.generateKey()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun encryptAndSave(bytes: ByteArray){
+        val encryptedToken = encryptCipher.doFinal(bytes)
+        val passwordProtection = KeyStore.PasswordProtection(null)
+        keyStore.setEntry(keyAlias, KeyStore.SecretKeyEntry(getKey()), passwordProtection)
+    }
+
 //    @RequiresApi(Build.VERSION_CODES.O)
-//    fun encryptAndSave(bytes: ByteArray){
-//        val encryptedToken = encryptCipher.doFinal(bytes)
-//        val passwordProtection = KeyStore.PasswordProtection(null)
-//        keyStore.setEntry(keyAlias, KeyStore.SecretKeyEntry(getKey()), passwordProtection)
-//    }
-
-//    fun encrypt(bytes: ByteArray): Pair<ByteArray, ByteArray> {
-//        val encryptedBytes = encryptCipher.doFinal(bytes)
-//        return Pair(encryptCipher.iv, encryptedBytes)
-//    }
+//    fun retrieveAndDecrypt(): ByteArray {
+//        // Retrieve the encrypted bytes (you would retrieve this from where you saved it)
+////        val encryptedBytes: ByteArray =
 //
-//    fun decrypt(iv: ByteArray, encryptedBytes: ByteArray): ByteArray {
-//        return getDecryptCipherForIv(iv).doFinal(encryptedBytes)
+//        // Get the key
+//        val passwordProtection = KeyStore.PasswordProtection(null)
+//        val secretKeyEntry = keyStore.getEntry(keyAlias, passwordProtection) as KeyStore.SecretKeyEntry
+//        val secretKey = secretKeyEntry.secretKey
+//
+//        // Initialize a cipher in DECRYPT_MODE
+//        val decryptCipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
+//        decryptCipher.init(Cipher.DECRYPT_MODE, secretKey)
+//
+//        // Decrypt the data
+//        val decryptedBytes = decryptCipher.doFinal(encryptedBytes)
+//
+//        return decryptedBytes
 //    }
 
 
-    fun encrypt(
-        bytes: ByteArray,
-        outputStream: OutputStream
-    ): ByteArray{
+    fun encrypt(bytes: ByteArray): Pair<ByteArray, ByteArray> {
         val encryptedBytes = encryptCipher.doFinal(bytes)
-        outputStream.use {
-            it.write(encryptCipher.iv.size)
-            it.write(encryptCipher.iv)
-            it.write(encryptedBytes.size)
-            it.write(encryptedBytes)
-        }
-        return encryptedBytes
+        return Pair(encryptCipher.iv, encryptedBytes)
     }
 
-    fun decrypt(inputStream: InputStream): ByteArray{
-        return inputStream.use {
-            val ivSize = it.read()
-            val iv = ByteArray(ivSize)
-            it.read()
-
-            val encryptedBytesSize = it.read()
-            val encryptedBytes = ByteArray(encryptedBytesSize)
-            it.read()
-
-            getDecryptCipherForIv(iv).doFinal(encryptedBytes)
-        }
+    fun decrypt(iv: ByteArray, encryptedBytes: ByteArray): ByteArray {
+        return getDecryptCipherForIv(iv).doFinal(encryptedBytes)
     }
+
+
+//    fun encrypt(
+//        bytes: ByteArray,
+//        outputStream: OutputStream
+//    ): ByteArray{
+//        val encryptedBytes = encryptCipher.doFinal(bytes)
+//        outputStream.use {
+//            it.write(encryptCipher.iv.size)
+//            it.write(encryptCipher.iv)
+//            it.write(encryptedBytes.size)
+//            it.write(encryptedBytes)
+//        }
+//        return encryptedBytes
+//    }
+
+//    fun decrypt(inputStream: InputStream): ByteArray{
+//        return inputStream.use {
+//            val ivSize = it.read()
+//            val iv = ByteArray(ivSize)
+//            it.read()
+//
+//            val encryptedBytesSize = it.read()
+//            val encryptedBytes = ByteArray(encryptedBytesSize)
+//            it.read()
+//
+//            getDecryptCipherForIv(iv).doFinal(encryptedBytes)
+//        }
+//    }
 
     companion object{
         private const val ALGORITHM = KeyProperties.KEY_ALGORITHM_AES
         private const val BLOCK_MODE = KeyProperties.BLOCK_MODE_CBC
         private const val PADDING = KeyProperties.ENCRYPTION_PADDING_PKCS7
         private const val TRANSFORMATION = "$ALGORITHM/$BLOCK_MODE/$PADDING"
-//        private const val keyAlias = "MY_AUTH_TOKEN_KEY"
+        private const val keyAlias = "MY_AUTH_TOKEN_KEY"
     }
 }*/

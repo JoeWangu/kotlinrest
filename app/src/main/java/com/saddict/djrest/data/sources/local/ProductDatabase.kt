@@ -1,17 +1,21 @@
 package com.saddict.djrest.data.sources.local
 
-import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.saddict.djrest.data.manager.ProductDao
 import com.saddict.djrest.model.local.ProductEntity
+import com.saddict.djrest.model.local.ProductFavourites
 import com.saddict.djrest.utils.Converters
 
-@Database(entities = [ ProductEntity::class ], version = 1, exportSchema = false)
+@Database(
+    entities = [
+        ProductEntity::class,
+        ProductFavourites::class
+    ], version = 1, exportSchema = false
+)
 @TypeConverters(Converters::class)
-abstract class ProductDatabase: RoomDatabase() {
+abstract class ProductDatabase : RoomDatabase() {
     abstract fun productDao(): ProductDao
 //    companion object{
 //        @Volatile

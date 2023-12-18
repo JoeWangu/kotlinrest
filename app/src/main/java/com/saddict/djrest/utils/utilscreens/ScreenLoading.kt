@@ -1,4 +1,4 @@
-package com.saddict.djrest.ui.screens.extra
+package com.saddict.djrest.utils.utilscreens
 
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat

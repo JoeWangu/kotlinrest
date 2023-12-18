@@ -25,8 +25,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.saddict.djrest.R
 import com.saddict.djrest.model.local.ProductEntity
-import com.saddict.djrest.ui.TopBar
 import com.saddict.djrest.ui.navigation.NavigationDestination
+import com.saddict.djrest.utils.utilscreens.RestTopAppBar
 
 object ProductDetailsDestination : NavigationDestination {
     override val route = "product_details"
@@ -47,7 +47,7 @@ fun ProductDetailsScreen(
     val uiState = productDetailsViewModel.uiState.collectAsState()
     Scaffold(
         topBar = {
-            TopBar(
+            RestTopAppBar(
                 title = stringResource(ProductDetailsDestination.titleRes),
                 canNavigateBack = true,
                 navigateUp = navigateBack,

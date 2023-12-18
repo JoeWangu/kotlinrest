@@ -17,7 +17,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object PagingModule {
-    @OptIn(ExperimentalPagingApi::class)
     @Provides
     @Singleton
     fun providePager(
@@ -25,19 +24,36 @@ object PagingModule {
         productDb: ProductDatabase
     ): Pager<Int, ProductEntity> {
         return Pager(
-            config = PagingConfig(pageSize = 10, prefetchDistance = 1),
-            remoteMediator = PagerUseCase(
-                productApi = productApi,
-                productDb = productDb
-            ),
+            config = PagingConfig(pageSize = 20, prefetchDistance = 1, enablePlaceholders = false),
+//            remoteMediator = PagerUseCase(
+//                productApi = productApi,
+//                productDb = productDb
+//            ),
             pagingSourceFactory = {
-                CustomPagingSource(productApi)
+                CustomPagingSource(productApi = productApi, productDb = productDb)
 //                productDb.productDao().customPagingSource()
 //                productDb.productDao().pagingSource()
             }
         )
     }
 }
+
+//@Module
+//@InstallIn(SingletonComponent::class)
+//object PagingModule {
+//    @OptIn(ExperimentalPagingApi::class)
+//    @Provides
+//    @Singleton
+//    fun providePager(
+//        productDb: ProductDatabase
+//    ): Pager<Int, ProductEntity> {
+//        return Pager(
+//            config = PagingConfig(pageSize = 10, prefetchDistance = 1),
+//            pagingSourceFactory = { productDb.productDao().pagingSource() }
+//        )
+//    }
+//}
+
 
 //val pager = Pager(PagingConfig(pageSize = 5)) {
 //    object : PagingSource<Int, ProductsResult>() {

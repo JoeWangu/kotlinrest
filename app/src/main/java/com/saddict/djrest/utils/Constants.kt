@@ -2,7 +2,6 @@ package com.saddict.djrest.utils
 
 object Constants {
     // Endpoints
-    const val BASE_URL = "https://royaldweeb.pythonanywhere.com/"
     const val CREATE_USER_URL = "create-user-api/"
     const val LOGIN_URL = "login-api/"
 //    const val LOGOUT_URL = "logout-api/"

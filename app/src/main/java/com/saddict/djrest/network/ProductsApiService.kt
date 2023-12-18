@@ -36,6 +36,7 @@ interface ProductsApiService {
     ): Call<ProductsResult>
     //    TODO:
     //     1.Refresh database after updating or saving
+    //     2. On updating data in api take response and update single product in database
 
     //    @Headers("Content-Type:application/json")
     @POST(LOGIN_URL)

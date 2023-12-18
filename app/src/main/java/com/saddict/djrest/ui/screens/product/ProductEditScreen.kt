@@ -9,11 +9,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.saddict.djrest.R
-import com.saddict.djrest.ui.TopBar
 import com.saddict.djrest.ui.navigation.NavigationDestination
 import com.saddict.djrest.utils.toastUtil
+import com.saddict.djrest.utils.utilscreens.RestTopAppBar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -37,7 +36,7 @@ fun ProductEditScreen(
     val ctx = LocalContext.current
     Scaffold(
         topBar = {
-            TopBar(
+            RestTopAppBar(
                 title = stringResource(id = ProductEditDestination.titleRes),
                 canNavigateBack = canNavigateBack,
                 navigateUp = navigateBack
@@ -51,12 +50,13 @@ fun ProductEditScreen(
             onSaveClick = {
                 coroutineScope.launch {
                     viewModel.updateProduct()
-                    viewModel.uiCondition.collect{ state ->
-                        when(state){
+                    viewModel.uiCondition.collect { state ->
+                        when (state) {
                             ProductUpdateUiCondition.Error -> {
                                 ctx.toastUtil("Could not save")
                                 navigateBack()
                             }
+
                             ProductUpdateUiCondition.Loading -> ctx.toastUtil("Saving Product")
                             is ProductUpdateUiCondition.Success -> {
                                 ctx.toastUtil("Updated Successfully")

@@ -1,4 +1,4 @@
-package com.saddict.djrest.utils
+package com.saddict.djrest.utils.utilscreens
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandLess

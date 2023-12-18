@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
 import com.saddict.djrest.model.local.ProductEntity
+import com.saddict.djrest.model.local.ProductFavourites
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -19,14 +20,22 @@ interface ProductDao {
     @Query("SELECT * from products ORDER BY id ASC")
     fun getAllProducts(): Flow<List<ProductEntity>>
 
-//    @Query("SELECT * from products")
-//    fun pagingSource(): PagingSource<Int, ProductEntity>
+    @Query("SELECT * from products ORDER BY id DESC")
+    fun getAllDesc(): List<ProductEntity>
+    @Query("SELECT * from products ORDER BY id DESC")
+    suspend fun getAllToPage(): List<ProductEntity>
+
+    @Query("SELECT * from products")
+    fun pagingSource(): PagingSource<Int, ProductEntity>
 
 //    @Query("SELECT * from products")
 //    fun customPagingSource(): CustomPagingSource
 
     @Query("DELETE FROM products")
     suspend fun deleteAllProducts()
+
+    @Query("SELECT * FROM productfavourites")
+    fun getFavourites(): Flow<List<ProductFavourites>>
 
 //    @Update
 //    suspend fun updateProductResponse(productResponse: Products)

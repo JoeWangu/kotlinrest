@@ -43,12 +43,11 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.saddict.djrest.R
-import com.saddict.djrest.ui.TopBar
 import com.saddict.djrest.ui.navigation.NavigationDestination
 import com.saddict.djrest.ui.screens.home.HomeDestination
 import com.saddict.djrest.utils.toastUtil
+import com.saddict.djrest.utils.utilscreens.RestTopAppBar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -67,7 +66,7 @@ fun LoginScreen(
     Scaffold(
         modifier = modifier,
         topBar = {
-            TopBar(
+            RestTopAppBar(
                 title = stringResource(HomeDestination.titleRes),
                 canNavigateBack = false,
             )
@@ -103,7 +102,7 @@ fun LoginBody(
             LoginInput(
                 navigateToHome = navigateToHome,
                 navigateToRegister = navigateToRegister
-                )
+            )
         }
     }
 }

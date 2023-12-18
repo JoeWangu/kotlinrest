@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name" translatable="false">dj rest</string>
     <string name="change_theme">Switch on dynamic theme</string>
+    <string name="home">home</string>
+    <string name="trending">trending</string>
+    <string name="account">account</string>
+    <string name="favourite">favourite</string>
+    <string name="settings">settings</string>
     <string name="loading">loading</string>
     <string name="loading_failed">loading failed</string>
     <string name="retry">retry</string>

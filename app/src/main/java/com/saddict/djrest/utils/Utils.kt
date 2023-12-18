@@ -5,3 +5,5 @@ import android.widget.Toast
 
 fun Context.toastUtil(message: CharSequence) =
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+fun Context.toastUtilLong(message: CharSequence) =
+    Toast.makeText(this, message, Toast.LENGTH_LONG).show()

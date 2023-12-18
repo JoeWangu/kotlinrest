@@ -14,8 +14,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.saddict.djrest.data.manager.PreferenceDataStore
-import com.saddict.djrest.ui.screens.extra.LoadingDestination
-import com.saddict.djrest.ui.screens.extra.LoadingScreen
+import com.saddict.djrest.utils.utilscreens.LoadingDestination
+import com.saddict.djrest.utils.utilscreens.LoadingScreen
 import com.saddict.djrest.ui.screens.home.HomeDestination
 import com.saddict.djrest.ui.screens.home.HomeScreen
 import com.saddict.djrest.ui.screens.product.ProductDetailsDestination
@@ -91,7 +91,7 @@ fun RestNavHost(
             HomeScreen(
                 navigateToItemDetails = { navController.navigate("${ProductDetailsDestination.route}/${it}") },
                 navigateToItemEntry = { navController.navigate(ProductEntryDestination.route) },
-                navigateToLogin = { navController.navigate(LoginDestination.route) }
+//                navigateToLogin = { navController.navigate(LoginDestination.route) }
             )
         }
         composable(
