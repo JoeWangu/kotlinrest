@@ -3,7 +3,7 @@ package com.saddict.djrest.utils
 import androidx.room.TypeConverter
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.saddict.djrest.model.remote.ImageArrayResults
+import com.saddict.djrest.products.model.remote.ImageArrayResults
 
 class Converters {
     private val objectMapper = ObjectMapper()

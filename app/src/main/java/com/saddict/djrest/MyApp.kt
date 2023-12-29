@@ -1,7 +1,6 @@
 package com.saddict.djrest
 
 import android.app.Application
-import com.saddict.djrest.data.manager.AppRepository
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
